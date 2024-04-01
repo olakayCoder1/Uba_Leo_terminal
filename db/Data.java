@@ -1,125 +1,59 @@
-
 package db;
 
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
- * Data
+ * The Data class represents a database of users.
  */
 public class Data {
 
+    // Initialize an ArrayList to store user data as Map objects
     @SuppressWarnings("rawtypes")
     ArrayList<Map> users = new ArrayList<Map>();
-    private int[] user_count = {1234,5678,3213,4321,5555};
 
-    public void Data(){ 
+    // Initialize an array of user PINs
+    private int[] user_count = {1234, 5678, 3213, 4321, 5555};
 
+    /**
+     * Constructs a Data object and initializes user data.
+     */
+    public Data(){ 
+        // Populate the users list with sample user data
         for (int x: user_count){
-            Map<String, Object> user = new Map<String,Object>(){
-
-                @Override
-                public void clear() {
-                    // TODO Auto-generated method stub
-                    
-                }
-
-                @Override
-                public boolean containsKey(Object key) {
-                    // TODO Auto-generated method stub
-                    return false;
-                }
-
-                @Override
-                public boolean containsValue(Object value) {
-                    // TODO Auto-generated method stub
-                    return false;
-                }
-
-                @Override
-                public Set<Entry<String, Object>> entrySet() {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-
-                @Override
-                public Object get(Object key) {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-
-                @Override
-                public boolean isEmpty() {
-                    // TODO Auto-generated method stub
-                    return false;
-                }
-
-                @Override
-                public Set<String> keySet() {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-
-                @Override
-                public Object put(String key, Object value) {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-
-                @Override
-                public void putAll(Map<? extends String, ? extends Object> m) {
-                    // TODO Auto-generated method stub
-                    
-                }
-
-                @Override
-                public Object remove(Object key) {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-
-                @Override
-                public int size() {
-                    // TODO Auto-generated method stub
-                    return 0;
-                }
-
-                @Override
-                public Collection<Object> values() {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-                // "name" = "Any objedc";
-                
-            };
-            
-            user.put("name","any object");
-            user.put("pin",x);
-            user.put("balance",5555);
+            Map<String, Object> user = new HashMap<>();
+            user.put("name", "Olanrewajut"); // Sample user name
+            user.put("pin", x); // User's PIN
+            user.put("balance", 559055); // User's balance
             users.add(user);
         }
     }
 
-    public List<Object> login(){
-        System.out.println(users);
-        try (Scanner scanner = new Scanner(System.in)) {
-            int pin = scanner.nextInt();
-            for (Map x: users){
-                if (x.get("pin").equals(pin)){
-                    String name = (String) x.get("name");
-                    int balance = (int) x.get("balance");
-                    return Arrays.asList(true , name, balance) ;
-                }
+    /**
+     * Validates user login credentials.
+     * 
+     * @param scanner The Scanner object for user input.
+     * @return        A list containing login status, user name, and balance if login is successful,
+     *                otherwise returns a list with login status as false and null values for name and balance.
+     */
+    public List<Object> login(Scanner scanner){
+        System.out.print("Enter pin : ");
+        int pin = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character left in the buffer
+        for (Map x: users){
+            if (x.get("pin").equals(pin)){
+                // If the provided PIN matches a user's PIN, retrieve user details
+                String name = (String) x.get("name");
+                int balance = (int) x.get("balance");
+                // Return a list with login status as true, user name, and balance
+                return Arrays.asList(true , name, balance) ;
             }
         }
+        // Return a list with login status as false and null values for name and balance
         return Arrays.asList(false, null , null);
-        
     }
-    
-    
 }
